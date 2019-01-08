@@ -1,0 +1,20 @@
+{
+  "name": "package-scraper",
+  "version": "1.0.0",
+  "main": "build/index.js",
+  "license": "MIT",
+  "scripts": {
+    "build": "rm -rf build && tsc"
+  },
+  "devDependencies": {
+    "@types/nanographql": "^2.0.1",
+    "@types/node-fetch": "^2.1.4",
+    "typescript": "^3.2.2"
+  },
+  "dependencies": {
+    "nanographql": "^2.0.0",
+    "node-fetch": "^2.3.0",
+    "perish": "^1.0.2",
+    "common": "*"
+  }
+}

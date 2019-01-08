@@ -1,0 +1,50 @@
+html {
+  height: 100%;
+}
+#root {
+  overflow-y: scroll;
+  height: 100vh;
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
+h1, h2, h3, h4 {
+  font-family: 'Gochi Hand', Helvetica !important;
+}
+
+.app {
+  display: grid;
+  grid-template-areas: 'title' 'search' 'primary';
+  grid-template-columns: 1fr;
+  grid-template-rows: auto auto 1fr;
+  height: 100vh;
+  width: 100vw;
+}
+
+.titlebar {
+  grid-area: title;
+  margin: 0;
+  height: 60px;
+  padding: 20px 20px 0 20px;
+}
+.search {
+  grid-area: search;
+  display: grid;
+  padding: 0 20px;
+  grid-template-areas: 'logo input';
+  grid-template-columns: 75px 1fr;
+  grid-template-rows: 75px;
+  width: 100vw;
+}
+.search__image {
+  grid-area: logo;
+}
+.search__input {
+  grid-area: input;
+  padding: 8px 8px 8px 10px;
+}
+.page__primary {
+  display: contents !important;
+  grid-area: primary;
+  padding: 0 20px;
+}

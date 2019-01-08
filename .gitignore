@@ -1,0 +1,10 @@
+node_modules
+lerna-debug.log
+lerna-debug.log
+src/terraform/.terraform
+packages/e2e
+.DS_Store
+analysis.*
+**/assets/*.csv
+**/*.log
+docker-compose.yaml

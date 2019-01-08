@@ -1,0 +1,25 @@
+{
+  "compilerOptions": {
+    // "lib": ["es6", "esnext.asynciterable", "dom"], /* Specify library files to be included in the compilation. */
+    "baseUrl": "/",
+    "outDir": "build",
+    "target": "es2017",                          /* Specify ECMAScript target version: 'ES3' (default), 'ES5', 'ES2015', 'ES2016', 'ES201','ES2018' or 'ESNEXT'. */
+    "module": "commonjs",                     /* Specify module code generation: 'none', 'commonjs', 'amd', 'system', 'umd', 'es2015', or 'ESNext'. */
+    // "lib": ["es2015", "esnext.asynciterable"],                             /* Specify library files to be included in the compilation. */
+    "lib": ["es2017", "esnext.asynciterable"],                             /* Specify library files to be included in the compilation. */
+    "sourceMap": true,
+    "allowJs": false,
+    "declaration": true,
+    "declarationDir": "./build/typings", // keep seperate as various code, e.g. migrations, expect unadultered directories of js files
+    "jsx": "react",
+    "moduleResolution": "node",
+    "rootDir": "src",
+    "forceConsistentCasingInFileNames": true,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "suppressImplicitAnyIndexErrors": true,
+    "noUnusedLocals": true
+  },
+}

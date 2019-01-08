@@ -1,0 +1,44 @@
+{
+  "name": "common",
+  "version": "0.0.1",
+  "private": true,
+  "description": "",
+  "license": "PRIVATE",
+  "main": "build/index.js",
+  "types": "build/index.d.ts",
+  "typings": "build/index.d.ts",
+  "scripts": {
+    "bootstrap": "cd ../../ ; yarn bootstrap",
+    "build": "tsc",
+    "clean": "rm -rf build",
+    "prebuild": "run-p clean*",
+    "prestart": "run-p clean*",
+    "start": "tsc --watch",
+    "format": "prettier-standard \"src/**/*.{js,json,ts}\"",
+    "lint": "standard \"src/**/*.js\"",
+    "lint-staged": "lint-staged"
+  },
+  "author": "cdaringe",
+  "dependencies": {
+    "lodash": "^4.17.10",
+    "nanographql": "^2.0.0"
+  },
+  "devDependencies": {
+    "npm-run-all": "^4.1.5",
+    "@types/lodash": "^4.14.112",
+    "@types/nanographql": "^2.0.0",
+    "@types/node-fetch": "^2.1.4",
+    "@types/node": "^10.12.11",
+    "lint-staged": "^8.1.0",
+    "prettier-standard": "^8.0.1",
+    "typescript": "^3.2.1"
+  },
+  "lint-staged": {
+    "linters": {
+      "src/**/*.{js,json,ts}": [
+        "prettier-standard",
+        "git add"
+      ]
+    }
+  }
+}

@@ -1,0 +1,84 @@
+{
+  "name": "denolandia",
+  "version": "0.0.1",
+  "private": true,
+  "description": "deno package hub",
+  "license": "MIT",
+  "engines": {
+    "node": "11.x"
+  },
+  "scripts": {
+    "api:image:build": "docker build . -f Dockerfile.api -t cdaringe/denolandia",
+    "api:image:push": "docker push cdaringe/denolandia",
+    "api:image:static": "echo 'its a big script, big deal™' && rm -rf packages/api/static packages/api/package-scraper && mkdir -p packages/api/static && cp -r packages/ui/build packages/api/static/public && cp -r packages/common/build packages/api/common && cp -r packages/package-scraper/build packages/api/package-scraper",
+    "bootstrap": "NODE_ENV=development lerna bootstrap && lerna link --force-local",
+    "build:dev": "run-s build:noui api:image:static",
+    "build:noui": "node scripts/build.js build --skip-ui",
+    "build:packages": "node scripts/build.js packages",
+    "build:the_whole_enchilada": "run-s build:packages api:image:static api:image:build",
+    "clean": "run-p clean:*",
+    "clean:api": "rm -rf packages/api/static/public packages/api/common",
+    "clean:builds": "rm -rf build && find packages/ -maxdepth 2 -name \"build\" -type d -print0 | xargs -0 rm -rf",
+    "commitmsg": "commitlint -E GIT_PARAMS",
+    "debug": "run-p start:ui debug:api",
+    "debug-fs": "ls -al packages && ls -al packages/ui && ls -al packages/api",
+    "debug:api": "cd packages/api && yarn debug",
+    "format": "prettier-standard \"{scripts,src}/**/*.{js,json,ts}\" && lerna exec --parallel yarn format",
+    "hack:graphql": "echo 'HACK: follow up on https://github.com/yarnpkg/yarn/issues/5236' && rm -rf packages/api/node_modules/@gql2ts/from-schema/node_modules/graphql packages/api/node_modules/@gql2ts/util/node_modules/graphql",
+    "lint": "standard \"{scripts,src}/**/*.js\"",
+    "lint-packages": "lerna run -- lint-staged",
+    "lint-staged": "lint-staged",
+    "nuke": "run-s clean nuke:*",
+    "nuke:node_modules": "rm -rf node_modules && find packages/ -maxdepth 2 -name \"node_modules\"  -type d -print0 | xargs -0 rm -rf",
+    "postbootstrap": "run-s hack:*",
+    "postinstall": "node scripts/postinstall.js",
+    "postinstall:prod": "run-s bootstrap build debug-fs",
+    "prebuild": "run-s clean",
+    "precommit": "run-p lint-staged lint-packages",
+    "start": "run-s start:api:prod",
+    "start:dev": "run-p start:ui start:api",
+    "start:api": "cd packages/api && yarn start",
+    "start:api:prod": "cd packages/api && NODE_ENV=production yarn start:prod",
+    "start:ui": "cd packages/ui && yarn start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@gitlab.com:cdaringe/denolandia.git"
+  },
+  "author": "",
+  "bugs": {
+    "url": "https://gitlab.com/dino-dna/denolandia/issues"
+  },
+  "homepage": "https://gitlab.com/dino-dna/denolandia#readme",
+  "dependencies": {
+    "@commitlint/cli": "^7.0.0",
+    "@commitlint/config-conventional": "^7.0.1",
+    "axios": "^0.18.0",
+    "bluebird": "^3.5.1",
+    "chalk": "^2.4.1",
+    "classnames": "^2.2.6",
+    "dotenv": "^6.0.0",
+    "execa": "^0.10.0",
+    "freeport": "^1.0.5",
+    "fs-extra": "^7.0.0",
+    "glob": "^7.1.2",
+    "husky": "^0.14.3",
+    "lerna": "^2.11.0",
+    "lint-staged": "^7.2.0",
+    "lodash": "^4.17.10",
+    "meow": "^5.0.0",
+    "npm-run-all": "^4.1.3",
+    "perish": "^1.0.2",
+    "prettier-standard": "^8.0.1",
+    "promise-retry": "^1.1.1",
+    "standard": "^11.0.1"
+  },
+  "lint-staged": {
+    "linters": {
+      "{scripts,src}/**/*.{js,json,ts}": [
+        "prettier-standard",
+        "git add"
+      ]
+    }
+  }
+}

@@ -1,0 +1,20 @@
+FROM node:11-alpine
+EXPOSE 9090
+ENV NODE_ENV=production
+ENV USER=node
+RUN mkdir -p /api
+WORKDIR /api
+ADD packages/api/package.json packages/api/yarn.lock ./
+# "../common" is a locally linked package. copy it into the api working dir at build
+# time s.t. install works. docker needs all files in context, thus, "../common" biffs
+RUN sed -i'' 's|"common"\: ".*"|"common": "./common"|' ./package.json
+ADD packages/common ./common
+# "../package-scraper" is a locally linked package. copy it into the api working dir at build
+# time s.t. install works. docker needs all files in context, thus, "../package-scraper" biffs
+RUN sed -i'' 's|"package-scraper"\: ".*"|"package-scraper": "./package-scraper"|' ./package.json
+ADD packages/package-scraper ./package-scraper
+RUN yarn
+ADD packages/api/build ./build
+ADD packages/api/knexfile.js ./
+ADD packages/api/static ./static
+CMD ["yarn", "start:prod"]

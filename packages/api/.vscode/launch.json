@@ -1,0 +1,85 @@
+{
+  // Use IntelliSense to learn about possible attributes.
+  // Hover to view descriptions of existing attributes.
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "node",
+      "request": "attach",
+      "name": "Attach",
+      "port": 9229
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Launch File",
+      "program": "${file}",
+      "sourceMaps": true,
+      "outFiles": [ "${workspaceRoot}/build/**/*.js" ],
+      "skipFiles": [
+        "<node_internals>/**/*.js"
+      ]
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "trace": true,
+      "name": "api",
+      "program": "${workspaceFolder}/build/bin.js",
+      "env": {
+        "LOG_LEVEL": "debug",
+        // "DEBUG": "denolandia*,graphile-build-pg:sql",
+        "DEBUG": "denolandia*,graphile*,postgraphile*",
+      },
+      "console": "externalTerminal",
+      "skipFiles": [
+        "<node_internals>/**/*.js"
+      ]
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "trace": true,
+      "name": "api (w/ db superuser)",
+      "program": "${workspaceFolder}/build/bin.js",
+      "env": {
+        "DEBUG": "koa*,denolandia*",
+        "LOG_LEVEL": "debug",
+        "DEBUG": "denolandia*",
+      },
+      "console": "externalTerminal",
+      "skipFiles": [
+        "<node_internals>/**/*.js"
+      ]
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "test file",
+      "program": "${workspaceRoot}/node_modules/ava/profile.js",
+      "args": [
+        "${file}"
+      ],
+      "skipFiles": [
+        "<node_internals>/**/*.js"
+      ],
+      "env": {
+        "NODE_ENV": "test"
+      }
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "migrate:up",
+      "program": "${workspaceRoot}/node_modules/.bin/knex",
+      "cwd": "${workspaceFolder}/build",
+      "args": [
+        "migrate:latest"
+      ],
+      "skipFiles": [
+        "<node_internals>/**/*.js"
+      ]
+    }
+  ]
+}

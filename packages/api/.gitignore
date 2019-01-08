@@ -1,0 +1,10 @@
+dev.sqlite3
+src/public/*
+build
+static/public
+yarn-error.log
+migrations/fixture/sandbox.sql
+common
+.env.development
+package-scraper
+docker-compose.yaml

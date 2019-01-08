@@ -1,0 +1,38 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "packages/api"
+		},
+		{
+			"path": "packages/common"
+		},
+		{
+			"path": "packages/ui"
+    },
+		{
+			"path": "packages/package-scraper"
+		}
+	],
+	"settings": {
+		"git.ignoreLimitWarning": true,
+		"emeraldwalk.runonsave": {
+			"autoClearConsole": true,
+			"commands": [
+				{
+					"match": "\\.[jt]sx?$",
+					"cmd": "npx prettier-standard ${file}"
+				}
+			]
+		},
+    "todo-tree.flat": true,
+    "todo-tree.tags": [
+      "TODO",
+      "FIXME",
+      "@TODO"
+		],
+		"typescript.tsdk": "ui/node_modules/typescript/lib"
+	}
+}

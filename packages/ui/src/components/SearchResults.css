@@ -1,0 +1,8 @@
+.rt-table {
+  padding: 0 20px !important;
+}
+
+.rt-head {
+  -webkit-box-shadow: 0 0px 1px 0px rgba(0,0,0,0.15) !important;
+  box-shadow: 0 0px 1px 0px rgba(0,0,0,0.15) !important;
+}
