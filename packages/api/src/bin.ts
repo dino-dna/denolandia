@@ -9,6 +9,7 @@ async function start () {
   const envConfigFilename = resolve(__dirname, `../../.env.${process.env.NODE_ENV}`)
   try {
     await fs.lstat(envConfigFilename)
+    debug(`booting with env file: ${envConfigFilename}`)
     dotenv.config({ path: envConfigFilename })
   } catch (err) {
     debug(`booting without env file. no file found: ${envConfigFilename}`)

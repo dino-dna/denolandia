@@ -6,9 +6,9 @@ export function createMiddleware () {
     contentSecurityPolicy: {
       directives: {
         defaultSrc: ["'self'", 'data:'],
-        fontSrc: ["'self'", 'data:', 'fonts.googleapis.com'],
+        fontSrc: ["'self'", 'data:', 'https://fonts.gstatic.com/', 'https://fonts.googleapis.com/'],
         scriptSrc: ["'self'"],
-        styleSrc: ["'self'", "'unsafe-inline'", 'fonts.googleapis.com']
+        styleSrc: ["'self'", "'unsafe-inline'", 'https://fonts.gstatic.com/', 'https://fonts.googleapis.com/']
       }
     },
     referrerPolicy: { policy: 'no-referrer' }

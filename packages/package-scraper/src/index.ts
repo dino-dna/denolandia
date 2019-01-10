@@ -25,16 +25,11 @@ export async function scrapeDatabase (opts?: ScrapeDatabaseOptions) {
     opts || {}
 
   const finalGithubGraphqlApiEndpont =
-    githubGraphqlApiEndpont ||
-    process.env.GITHUB_GRAPHQL_API_ENDPOINT ||
-    'https://api.github.com/graphql'
+    githubGraphqlApiEndpont || process.env.GITHUB_GRAPHQL_API_ENDPOINT || 'https://api.github.com/graphql'
   const finalGithubToken = githubToken || process.env.GITHUB_TOKEN
   const finalDenolandiaGraphqlApiEndpoint =
-    denolandiaGraphqlApiEndpoint ||
-    process.env.DENOLANDIA_GRAPHQL_API_ENDPOINT ||
-    'http://localhost:9090/graphql'
-  const finalDenolandiaAdminToken =
-    denolandiaAdminToken || process.env.DENOLANDIA_ADMIN_TOKEN!
+    denolandiaGraphqlApiEndpoint || process.env.DENOLANDIA_GRAPHQL_API_ENDPOINT || 'http://localhost:9090/graphql'
+  const finalDenolandiaAdminToken = denolandiaAdminToken || process.env.DENOLANDIA_ADMIN_TOKEN!
 
   if (!finalGithubToken) throw new Error('GITHUB_TOKEN missing')
   if (!finalDenolandiaAdminToken) {
@@ -42,10 +37,7 @@ export async function scrapeDatabase (opts?: ScrapeDatabaseOptions) {
   }
 
   if (poll && !leadingEdge) {
-    setTimeout(
-      () => scrapeDatabase({ ...(opts || {}), leadingEdge: false }),
-      30 * 1000 * 60
-    )
+    setTimeout(() => scrapeDatabase({ ...(opts || {}), leadingEdge: false }), 30 * 1000 * 60)
   }
   const toScrape = await (await fetch(packagesUrl)).json()
   for (const name in toScrape) {
@@ -75,14 +67,7 @@ export interface ScrapeOptions {
 }
 
 export async function scrape (opts: ScrapeOptions) {
-  const {
-    name,
-    url,
-    githubToken,
-    githubEndpoint,
-    denolandiaEndpont,
-    denolandiaAdminToken
-  } = opts
+  const { name, url, githubToken, githubEndpoint, denolandiaEndpont, denolandiaAdminToken } = opts
   if (!url.match(/github/)) {
     console.warn(`unable to scrape ${url}. can only scrape github projects`)
     return
@@ -103,26 +88,26 @@ export async function scrape (opts: ScrapeOptions) {
       homepageUrl,
       repositoryTopics: { edges: topicEdges },
       issues: { totalCount: issueCount },
+      licenseInfo: { spdxId: licenseSpdxId },
       stargazers: { totalCount: stargazerCount },
-      url: repositoryUrl
+      url: repositoryUrl,
+      releases: { edges: releaseEdges }
     }
   } = meta.data
   const upsertBody = common.gql.queries.packages.upsertPackageBody({
-    name,
-    projectName: project,
-    organizationName: org,
     descriptionHtml: descriptionHTML,
     homepageUrl,
     issueCount,
+    latestRelease: releaseEdges.length ? topicEdges[0].node.name : null,
+    licenseSpdxId,
+    name,
+    organizationName: org,
+    projectName: project,
     stargazerCount,
     topics: JSON.stringify(
       topicEdges.map((edge: any) => {
         if (!edge.node.topic.name) {
-          throw new Error(
-            `expected topic in node object, received: ${JSON.stringify(
-              edge.node
-            )}`
-          )
+          throw new Error(`expected topic in node object, received: ${JSON.stringify(edge.node)}`)
         }
         return edge.node.topic.name
       })
@@ -142,9 +127,7 @@ export async function scrape (opts: ScrapeOptions) {
   }
   const upsertedJson = await upserted.json()
   if (upsertedJson && upsertedJson.errors) {
-    throw new Error(
-      upsertedJson.errors.map((err: Error) => err.message).join('\n')
-    )
+    throw new Error(upsertedJson.errors.map((err: Error) => err.message).join('\n'))
   }
   console.log(`upserted ${name}@${org}/${project}`)
 }
@@ -169,6 +152,16 @@ query {
       stargazers {
          totalCount
       }
+      licenseInfo {
+        spdxId
+      }
+      releases(last: 1) {
+        edges {
+          node {
+            name
+          }
+        }
+    	}
       url
   }
 }

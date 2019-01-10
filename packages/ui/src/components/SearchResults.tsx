@@ -1,11 +1,12 @@
 import './SearchResults.css'
 import 'react-table/react-table.css'
-import { Card, Icon } from 'semantic-ui-react'
+import { Card, Icon, Label, Portal, PortalProps } from 'semantic-ui-react'
 import * as React from 'react'
 import Table from 'react-table'
 import { Store } from 'interfaces'
 import { requestData } from 'src/util/table'
 import * as common from 'common'
+import cx from 'classnames'
 const debounce = require('lodash/debounce')
 
 export interface Props extends React.HTMLAttributes<HTMLDivElement> {}
@@ -19,8 +20,10 @@ export type SearchResultsState = {
 // https://raw.githubusercontent.com/denoland/registry/master/src/database.json
 
 export class SearchResults extends React.PureComponent<Props, SearchResultsState> {
+  public offsiteHeaders: React.RefObject<HTMLDivElement>
   constructor (props: Store.All) {
     super(props as any)
+    this.offsiteHeaders = React.createRef()
     this.state = {
       data: [],
       error: null,
@@ -56,10 +59,10 @@ export class SearchResults extends React.PureComponent<Props, SearchResultsState
   }, 500)
 
   render () {
+    const { className, ...rest } = this.props
     const { data, loading, pages } = this.state
     return (
       <Table
-        {...this.props as any}
         defaultSorted={[
           {
             id: 'name',
@@ -69,11 +72,21 @@ export class SearchResults extends React.PureComponent<Props, SearchResultsState
         columns={[
           {
             accessor: 'name',
-            Header: 'Package',
+            Header: (props: any) => {
+              const mountProps: Partial<PortalProps> = {}
+              if (this.offsiteHeaders.current) {
+                mountProps.mountNode = this.offsiteHeaders.current
+              }
+              return (
+                <Portal open trigger={<span>Package trigger</span>} {...mountProps}>
+                  <Label icon='sort' content={'Package'} style={{ float: 'right' }} />
+                </Portal>
+              )
+            },
             Cell: ({ original }) => {
               const field: denolandiaQL.IPackage = original || {}
               return (
-                <Card key={field.name} fluid>
+                <Card key={field.name} fluid style={{ padding: '0 20px' }}>
                   <Card.Content>
                     <Card.Header content={field.name} style={{ display: 'inline-block' }} />
                     <Card.Meta
@@ -85,8 +98,10 @@ export class SearchResults extends React.PureComponent<Props, SearchResultsState
                       style={{ display: 'inline-block', marginLeft: '10px' }}
                     />
                     <span style={{ float: 'right' }}>
-                      {field.stargazerCount}
-                      {' ⭐️'}
+                      <Label title={`license ${field.licenseSpdxId}`} size='mini' horizontal>
+                        {field.licenseSpdxId}
+                      </Label>
+                      {field.stargazerCount} {' ⭐️'}
                       {field.issueCount}
                       {' 💣'}
                     </span>
@@ -121,7 +136,16 @@ export class SearchResults extends React.PureComponent<Props, SearchResultsState
         multiSort
         onFetchData={this.fetchData}
         pages={pages!}
-      />
+      >
+        {(state, makeTable, instance) => {
+          return (
+            <div className={cx(className, 'search_results_table')} {...rest}>
+              <div ref={this.offsiteHeaders} style={{ padding: 2 }} />
+              {makeTable()}
+            </div>
+          )
+        }}
+      </Table>
     )
   }
 }

@@ -60,6 +60,18 @@ export const columnsByName = {
     jsType: 'string',
     pgType: 'varchar',
     sql: 'repository_url varchar not null'
+  },
+  latest_release: {
+    name: 'latest_release',
+    jsType: 'string',
+    pgType: 'varchar',
+    sql: 'latest_release varchar'
+  },
+  license_spdx_id: {
+    name: 'license_spdx_id',
+    jsType: 'string',
+    pgType: 'varchar',
+    sql: 'license_spdx_id varchar'
   }
 }
 

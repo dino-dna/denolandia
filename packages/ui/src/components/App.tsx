@@ -13,8 +13,10 @@ export class App extends React.PureComponent<Store.All & Store.IDispatcher, any>
           denolandia
         </Header.Content>
         <div className='search'>
-          <Image className='search__image' src='img/deno_logo.png' width='100%' />
-          <Input className='search__input' type='text' placeholder='Seach for packages' fluid size='massive' />
+          <div id='search__group'>
+            <Image className='search__image' src='img/deno_logo.png' width='100%' />
+            <Input className='search__input' type='text' placeholder='Seach for packages' fluid size='massive' />
+          </div>
         </div>
         <Switch>
           <Route exact path='/' render={routeProps => <SearchResults className='page__primary' />} />

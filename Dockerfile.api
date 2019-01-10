@@ -1,7 +1,4 @@
-FROM node:11-alpine
-EXPOSE 9090
-ENV NODE_ENV=production
-ENV USER=node
+FROM node:11-alpine as build
 RUN mkdir -p /api
 WORKDIR /api
 ADD packages/api/package.json packages/api/yarn.lock ./
@@ -13,8 +10,17 @@ ADD packages/common ./common
 # time s.t. install works. docker needs all files in context, thus, "../package-scraper" biffs
 RUN sed -i'' 's|"package-scraper"\: ".*"|"package-scraper": "./package-scraper"|' ./package.json
 ADD packages/package-scraper ./package-scraper
-RUN yarn
+# prune
+RUN yarn && cd /api/package-scraper && yarn && cd /api/common && yarn
 ADD packages/api/build ./build
 ADD packages/api/knexfile.js ./
 ADD packages/api/static ./static
+
+FROM node:11-alpine
+EXPOSE 9090
+ENV NODE_ENV=production
+ENV USER=node
+RUN mkdir -p /api
+WORKDIR /api
+COPY --from=build /api /api
 CMD ["yarn", "start:prod"]

@@ -164,6 +164,10 @@ declare namespace denolandiaQL {
     STARGAZER_COUNT_DESC = 'STARGAZER_COUNT_DESC',
     REPOSITORY_URL_ASC = 'REPOSITORY_URL_ASC',
     REPOSITORY_URL_DESC = 'REPOSITORY_URL_DESC',
+    LATEST_RELEASE_ASC = 'LATEST_RELEASE_ASC',
+    LATEST_RELEASE_DESC = 'LATEST_RELEASE_DESC',
+    LICENSE_SPDX_ID_ASC = 'LICENSE_SPDX_ID_ASC',
+    LICENSE_SPDX_ID_DESC = 'LICENSE_SPDX_ID_DESC',
     PRIMARY_KEY_ASC = 'PRIMARY_KEY_ASC',
     PRIMARY_KEY_DESC = 'PRIMARY_KEY_DESC'
   }
@@ -221,6 +225,16 @@ declare namespace denolandiaQL {
      * Checks for equality with the object’s `repositoryUrl` field.
      */
     repositoryUrl?: string | null;
+
+    /**
+     * Checks for equality with the object’s `latestRelease` field.
+     */
+    latestRelease?: string | null;
+
+    /**
+     * Checks for equality with the object’s `licenseSpdxId` field.
+     */
+    licenseSpdxId?: string | null;
   }
 
   /**
@@ -276,6 +290,16 @@ declare namespace denolandiaQL {
      * Filter by the object’s `repositoryUrl` field.
      */
     repositoryUrl?: IStringFilter | null;
+
+    /**
+     * Filter by the object’s `latestRelease` field.
+     */
+    latestRelease?: IStringFilter | null;
+
+    /**
+     * Filter by the object’s `licenseSpdxId` field.
+     */
+    licenseSpdxId?: IStringFilter | null;
 
     /**
      * Checks for all expressions in this list.
@@ -597,6 +621,8 @@ declare namespace denolandiaQL {
     issueCount: number | null;
     stargazerCount: number | null;
     repositoryUrl: string;
+    latestRelease: string | null;
+    licenseSpdxId: string | null;
   }
 
   /**
@@ -775,6 +801,8 @@ declare namespace denolandiaQL {
     issueCount?: number | null;
     stargazerCount?: number | null;
     repositoryUrl: string;
+    latestRelease?: string | null;
+    licenseSpdxId?: string | null;
   }
 
   /**
@@ -846,6 +874,8 @@ declare namespace denolandiaQL {
     issueCount?: number | null;
     stargazerCount?: number | null;
     repositoryUrl?: string | null;
+    latestRelease?: string | null;
+    licenseSpdxId?: string | null;
   }
 
   /**

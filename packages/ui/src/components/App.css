@@ -2,10 +2,19 @@ html {
   height: 100%;
 }
 #root {
+  margin: auto;
   overflow-y: scroll;
   height: 100vh;
   max-width: 100vw;
-  overflow-x: hidden;
+  overflow: hidden;
+  padding: 0 10px;
+}
+@media only screen and (min-width: 800px) {
+  #root {
+    padding: 0;
+    max-width: 1024px;
+    width: 90vw;
+  }
 }
 
 h1, h2, h3, h4 {
@@ -16,9 +25,9 @@ h1, h2, h3, h4 {
   display: grid;
   grid-template-areas: 'title' 'search' 'primary';
   grid-template-columns: 1fr;
-  grid-template-rows: auto auto 1fr;
-  height: 100vh;
-  width: 100vw;
+  grid-template-rows: auto auto minmax(0, 1fr);
+  height: 100%;
+  width: 100%;
 }
 
 .titlebar {
@@ -27,14 +36,17 @@ h1, h2, h3, h4 {
   height: 60px;
   padding: 20px 20px 0 20px;
 }
+
 .search {
   grid-area: search;
+  width: 100%;
+}
+#search__group {
   display: grid;
   padding: 0 20px;
   grid-template-areas: 'logo input';
   grid-template-columns: 75px 1fr;
   grid-template-rows: 75px;
-  width: 100vw;
 }
 .search__image {
   grid-area: logo;
@@ -44,7 +56,6 @@ h1, h2, h3, h4 {
   padding: 8px 8px 8px 10px;
 }
 .page__primary {
-  display: contents !important;
   grid-area: primary;
-  padding: 0 20px;
+  position: relative;
 }
