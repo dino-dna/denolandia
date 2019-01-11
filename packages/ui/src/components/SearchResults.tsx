@@ -100,7 +100,7 @@ export class SearchResults extends React.PureComponent<Props, SearchResultsState
                     <span style={{ float: 'right' }}>
                       <Label
                         basic
-                        color={field.licenseSpdxId === 'MIT' ? 'grey' : 'blue'}
+                        color={field.licenseSpdxId === 'MIT' ? null : 'blue'}
                         size='small'
                         horizontal
                       >
@@ -120,7 +120,7 @@ export class SearchResults extends React.PureComponent<Props, SearchResultsState
                       </Label>
                       <Label
                         basic
-                        color={field.issueCount > 0 ? 'orange' : 'grey'}
+                        color={field.issueCount === 0 ? null : 'orange'}
                         size='small'
                         horizontal
                         as='a'
