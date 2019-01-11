@@ -98,12 +98,37 @@ export class SearchResults extends React.PureComponent<Props, SearchResultsState
                       style={{ display: 'inline-block', marginLeft: '10px' }}
                     />
                     <span style={{ float: 'right' }}>
-                      <Label title={`license ${field.licenseSpdxId}`} size='mini' horizontal>
+                      <Label
+                        basic
+                        color={field.licenseSpdxId === 'MIT' ? 'grey' : 'blue'}
+                        size='small'
+                        horizontal
+                      >
+                        <Icon aria-label='license' name='balance' />
                         {field.licenseSpdxId}
                       </Label>
-                      {field.stargazerCount} {' ⭐️'}
-                      {field.issueCount}
-                      {' 💣'}
+                      <Label
+                        basic
+                        color='yellow'
+                        size='small'
+                        horizontal
+                        as='a'
+                        href={field.repositoryURL + '/stargazers'}
+                      >
+                        <Icon aria-label='stars' name='star' />
+                        {field.stargazerCount}
+                      </Label>
+                      <Label
+                        basic
+                        color={field.issueCount > 0 ? 'orange' : 'grey'}
+                        size='small'
+                        horizontal
+                        as='a'
+                        href={field.repositoryURL + '/issues'}
+                      >
+                        <Icon aria-label='open issues' name='bug'>
+                        {field.issueCount}
+                      </Label>
                     </span>
                     {field.descriptionHtml && (
                       <Card.Description>
