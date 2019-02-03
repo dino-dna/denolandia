@@ -42,7 +42,7 @@ class BuildTask {
  * # compile precedence graph
  * common
  * |                \
- * package-scraper    ui
+ * module-scraper    ui
  * |
  * api
  */
@@ -68,9 +68,9 @@ async function buildPackages ({ skipUi }) {
     dirname: pkgJsonsByProjectName.common.dirname
   })
   const packageScraper = new BuildTask({
-    name: 'package-scraper',
+    name: 'module-scraper',
     dependencies: [common],
-    dirname: pkgJsonsByProjectName['package-scraper'].dirname
+    dirname: pkgJsonsByProjectName['module-scraper'].dirname
   })
   const ui = new BuildTask({
     name: 'ui',

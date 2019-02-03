@@ -1,10 +1,10 @@
 export * from './interfaces'
 import * as gql from './gql'
 import * as notifcations from './notifications'
-import * as packagesColumns from './columns/packages'
+import * as modulesColumns from './columns/modules'
 import * as random from './random'
 
-export const columns = { packages: packagesColumns }
+export const columns = { modules: modulesColumns }
 export { gql, notifcations, random }
 
 export const msg = {}

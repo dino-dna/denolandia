@@ -1,3 +1,3 @@
 import * as args from './args'
-import * as packages from './packages'
-export { args, packages }
+import * as modules from './modules'
+export { args, modules }

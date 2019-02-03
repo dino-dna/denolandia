@@ -6,5 +6,5 @@ yarn-error.log
 migrations/fixture/sandbox.sql
 common
 .env.development
-package-scraper
+module-scraper
 docker-compose.yaml

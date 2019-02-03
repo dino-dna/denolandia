@@ -13,7 +13,7 @@
 			"path": "packages/ui"
     },
 		{
-			"path": "packages/package-scraper"
+			"path": "packages/module-scraper"
 		}
 	],
 	"settings": {

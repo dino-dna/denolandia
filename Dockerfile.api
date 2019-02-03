@@ -6,12 +6,12 @@ ADD packages/api/package.json packages/api/yarn.lock ./
 # time s.t. install works. docker needs all files in context, thus, "../common" biffs
 RUN sed -i'' 's|"common"\: ".*"|"common": "./common"|' ./package.json
 ADD packages/common ./common
-# "../package-scraper" is a locally linked package. copy it into the api working dir at build
-# time s.t. install works. docker needs all files in context, thus, "../package-scraper" biffs
-RUN sed -i'' 's|"package-scraper"\: ".*"|"package-scraper": "./package-scraper"|' ./package.json
-ADD packages/package-scraper ./package-scraper
+# "../module-scraper" is a locally linked package. copy it into the api working dir at build
+# time s.t. install works. docker needs all files in context, thus, "../module-scraper" biffs
+RUN sed -i'' 's|"module-scraper"\: ".*"|"module-scraper": "./module-scraper"|' ./package.json
+ADD packages/module-scraper ./module-scraper
 # prune
-RUN yarn && cd /api/package-scraper && yarn && cd /api/common && yarn
+RUN yarn && cd /api/module-scraper && yarn && cd /api/common && yarn
 ADD packages/api/build ./build
 ADD packages/api/knexfile.js ./
 ADD packages/api/static ./static

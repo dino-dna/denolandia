@@ -1,7 +1,7 @@
-# package-scraper
+# module-scraper
 
-- parses the dino package [database.json](https://raw.githubusercontent.com/denoland/registry/master/src/database.json)
-- retrieves metadata from github for each package
+- parses the dino module [database.json](https://raw.githubusercontent.com/denoland/registry/master/src/database.json)
+- retrieves metadata from github for each module
 - loads meta into the denolandia database
 
 ## usage

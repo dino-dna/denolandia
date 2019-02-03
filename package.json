@@ -10,7 +10,7 @@
   "scripts": {
     "api:image:build": "docker build . -f Dockerfile.api -t cdaringe/denolandia",
     "api:image:push": "docker push cdaringe/denolandia",
-    "api:image:static": "echo 'its a big script, big deal™' && rm -rf packages/api/static packages/api/package-scraper && mkdir -p packages/api/static && cp -r packages/ui/build packages/api/static/public && cp -r packages/common/build packages/api/common && cp -r packages/package-scraper/build packages/api/package-scraper",
+    "api:image:static": "echo 'its a big script, big deal™' && rm -rf packages/api/static packages/api/module-scraper && mkdir -p packages/api/static && cp -r packages/ui/build packages/api/static/public && cp -r packages/common/build packages/api/common && cp -r packages/module-scraper/build packages/api/module-scraper",
     "bootstrap": "NODE_ENV=development lerna bootstrap && lerna link --force-local",
     "build:dev": "run-s build:noui api:image:static",
     "build:noui": "node scripts/build.js build --skip-ui",

@@ -8,7 +8,7 @@ export interface ScrapeDatabaseOptions {
   githubGraphqlApiEndpont?: string
   githubToken?: string
   leadingEdge?: boolean
-  packagesUrl?: string
+  modulesUrl?: string
   poll?: boolean
 }
 
@@ -19,7 +19,7 @@ export async function scrapeDatabase (opts?: ScrapeDatabaseOptions) {
     githubGraphqlApiEndpont = '',
     githubToken = '',
     leadingEdge = false,
-    packagesUrl = 'https://raw.githubusercontent.com/denoland/registry/master/src/database.json',
+    modulesUrl = 'https://raw.githubusercontent.com/denoland/registry/master/src/database.json',
     poll = false
   } =
     opts || {}
@@ -39,7 +39,7 @@ export async function scrapeDatabase (opts?: ScrapeDatabaseOptions) {
   if (poll && !leadingEdge) {
     setTimeout(() => scrapeDatabase({ ...(opts || {}), leadingEdge: false }), 30 * 1000 * 60)
   }
-  const toScrape = await (await fetch(packagesUrl)).json()
+  const toScrape = await (await fetch(modulesUrl)).json()
   for (const name in toScrape) {
     try {
       await scrape({
@@ -92,13 +92,14 @@ export async function scrape (opts: ScrapeOptions) {
       homepageUrl,
       repositoryTopics: { edges: topicEdges },
       issues: { totalCount: issueCount },
-      licenseInfo: { spdxId: licenseSpdxId },
+      licenseInfo,
       stargazers: { totalCount: stargazerCount },
       url: repositoryUrl,
       releases: { edges: releaseEdges }
     }
   } = meta.data
-  const upsertBody = common.gql.queries.packages.upsertPackageBody({
+  const { spdxId: licenseSpdxId = '' } = licenseInfo || {}
+  const upsertBody = common.gql.queries.modules.upsertModuleBody({
     descriptionHtml: descriptionHTML,
     homepageUrl,
     issueCount,

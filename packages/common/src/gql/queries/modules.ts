@@ -1,12 +1,12 @@
 import { jsObjectAsArg, toQueryArgString } from './args'
 import nanographql = require('nanographql')
-import { columns } from '../../columns/packages'
+import { columns } from '../../columns/modules'
 const camelCase = require('lodash/camelCase')
 
-export function getAll (opts?: denolandiaQL.IAllPackagesOnQueryArguments) {
+export function getAll (opts?: denolandiaQL.IAllModulesOnQueryArguments) {
   return nanographql(`
     {
-      allPackages ${toQueryArgString(opts)} {
+      allModules ${toQueryArgString(opts)} {
         totalCount
         pageInfo {
           startCursor
@@ -21,11 +21,11 @@ export function getAll (opts?: denolandiaQL.IAllPackagesOnQueryArguments) {
     }
   `)()
 }
-export function upsertPackageBody (listing: denolandiaQL.IPackageInput) {
+export function upsertModuleBody (listing: denolandiaQL.IModuleInput) {
   return nanographql(`
     mutation {
-      upsertPackage(input: {
-        package: ${jsObjectAsArg(listing)}
+      upsertModule(input: {
+        module: ${jsObjectAsArg(listing)}
       }) {
         clientMutationId
       }

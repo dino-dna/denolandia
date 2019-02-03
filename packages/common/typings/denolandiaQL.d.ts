@@ -42,17 +42,17 @@ declare namespace denolandiaQL {
     node: Node | null;
 
     /**
-     * Reads and enables pagination through a set of `Package`.
+     * Reads and enables pagination through a set of `Module`.
      */
-    allPackages: IPackagesConnection | null;
-    packageById: IPackage | null;
-    packageByNameAndOrganizationNameAndProjectName: IPackage | null;
+    allModules: IModulesConnection | null;
+    moduleById: IModule | null;
+    moduleByNameAndOrganizationNameAndProjectName: IModule | null;
     isAdmin: boolean | null;
 
     /**
-     * Reads a single `Package` using its globally unique `ID`.
+     * Reads a single `Module` using its globally unique `ID`.
      */
-    package: IPackage | null;
+    module: IModule | null;
   }
 
   interface INodeOnQueryArguments {
@@ -62,7 +62,7 @@ declare namespace denolandiaQL {
     nodeId: string;
   }
 
-  interface IAllPackagesOnQueryArguments {
+  interface IAllModulesOnQueryArguments {
     /**
      * Only read the first `n` values of the set.
      */
@@ -89,35 +89,35 @@ declare namespace denolandiaQL {
     after?: any | null;
 
     /**
-     * The method to use when ordering `Package`.
+     * The method to use when ordering `Module`.
      * @default [{"alias":"primary_key_asc","specs":[["name",true],["organization_name",true],["project_name",true]],"unique":true}]
      */
-    orderBy?: Array<PackagesOrderBy> | null;
+    orderBy?: Array<ModulesOrderBy> | null;
 
     /**
      * A condition to be used in determining which values should be returned by the collection.
      */
-    condition?: IPackageCondition | null;
+    condition?: IModuleCondition | null;
 
     /**
      * A filter to be used in determining which values should be returned by the collection.
      */
-    filter?: IPackageFilter | null;
+    filter?: IModuleFilter | null;
   }
 
-  interface IPackageByIdOnQueryArguments {
+  interface IModuleByIdOnQueryArguments {
     id: number;
   }
 
-  interface IPackageByNameAndOrganizationNameAndProjectNameOnQueryArguments {
+  interface IModuleByNameAndOrganizationNameAndProjectNameOnQueryArguments {
     name: string;
     organizationName: string;
     projectName: string;
   }
 
-  interface IPackageOnQueryArguments {
+  interface IModuleOnQueryArguments {
     /**
-     * The globally unique `ID` to be used in selecting a single `Package`.
+     * The globally unique `ID` to be used in selecting a single `Module`.
      */
     nodeId: string;
   }
@@ -125,7 +125,7 @@ declare namespace denolandiaQL {
   /**
    * An object with a globally unique `ID`.
    */
-  type Node = IQuery | IPackage;
+  type Node = IQuery | IModule;
 
   /**
    * An object with a globally unique `ID`.
@@ -140,9 +140,9 @@ declare namespace denolandiaQL {
   }
 
   /**
-   * Methods to use when ordering `Package`.
+   * Methods to use when ordering `Module`.
    */
-  const enum PackagesOrderBy {
+  const enum ModulesOrderBy {
     NATURAL = 'NATURAL',
     ID_ASC = 'ID_ASC',
     ID_DESC = 'ID_DESC',
@@ -173,9 +173,9 @@ declare namespace denolandiaQL {
   }
 
   /**
-   * A condition to be used against `Package` object types. All fields are tested for equality and combined with a logical ‘and.’
+   * A condition to be used against `Module` object types. All fields are tested for equality and combined with a logical ‘and.’
    */
-  interface IPackageCondition {
+  interface IModuleCondition {
     /**
      * Checks for equality with the object’s `id` field.
      */
@@ -238,9 +238,9 @@ declare namespace denolandiaQL {
   }
 
   /**
-   * A filter to be used against `Package` object types. All fields are combined with a logical ‘and.’
+   * A filter to be used against `Module` object types. All fields are combined with a logical ‘and.’
    */
-  interface IPackageFilter {
+  interface IModuleFilter {
     /**
      * Filter by the object’s `id` field.
      */
@@ -304,17 +304,17 @@ declare namespace denolandiaQL {
     /**
      * Checks for all expressions in this list.
      */
-    and?: Array<IPackageFilter> | null;
+    and?: Array<IModuleFilter> | null;
 
     /**
      * Checks for any expressions in this list.
      */
-    or?: Array<IPackageFilter> | null;
+    or?: Array<IModuleFilter> | null;
 
     /**
      * Negates the expression.
      */
-    not?: IPackageFilter | null;
+    not?: IModuleFilter | null;
   }
 
   /**
@@ -578,20 +578,20 @@ declare namespace denolandiaQL {
   }
 
   /**
-   * A connection to a list of `Package` values.
+   * A connection to a list of `Module` values.
    */
-  interface IPackagesConnection {
-    __typename: 'PackagesConnection';
+  interface IModulesConnection {
+    __typename: 'ModulesConnection';
 
     /**
-     * A list of `Package` objects.
+     * A list of `Module` objects.
      */
-    nodes: Array<IPackage | null>;
+    nodes: Array<IModule | null>;
 
     /**
-     * A list of edges which contains the `Package` and cursor to aid in pagination.
+     * A list of edges which contains the `Module` and cursor to aid in pagination.
      */
-    edges: Array<IPackagesEdge>;
+    edges: Array<IModulesEdge>;
 
     /**
      * Information to aid in pagination.
@@ -599,13 +599,13 @@ declare namespace denolandiaQL {
     pageInfo: IPageInfo;
 
     /**
-     * The count of *all* `Package` you could get from the connection.
+     * The count of *all* `Module` you could get from the connection.
      */
     totalCount: number | null;
   }
 
-  interface IPackage {
-    __typename: 'Package';
+  interface IModule {
+    __typename: 'Module';
 
     /**
      * A globally unique identifier. Can be used in various places throughout the system to identify this single value.
@@ -626,10 +626,10 @@ declare namespace denolandiaQL {
   }
 
   /**
-   * A `Package` edge in the connection.
+   * A `Module` edge in the connection.
    */
-  interface IPackagesEdge {
-    __typename: 'PackagesEdge';
+  interface IModulesEdge {
+    __typename: 'ModulesEdge';
 
     /**
      * A cursor for use in pagination.
@@ -637,9 +637,9 @@ declare namespace denolandiaQL {
     cursor: any | null;
 
     /**
-     * The `Package` at the end of the edge.
+     * The `Module` at the end of the edge.
      */
-    node: IPackage | null;
+    node: IModule | null;
   }
 
   /**
@@ -676,121 +676,121 @@ declare namespace denolandiaQL {
     __typename: 'Mutation';
 
     /**
-     * Creates a single `Package`.
+     * Creates a single `Module`.
      */
-    createPackage: ICreatePackagePayload | null;
+    createModule: ICreateModulePayload | null;
 
     /**
-     * Updates a single `Package` using its globally unique id and a patch.
+     * Updates a single `Module` using its globally unique id and a patch.
      */
-    updatePackage: IUpdatePackagePayload | null;
+    updateModule: IUpdateModulePayload | null;
 
     /**
-     * Updates a single `Package` using a unique key and a patch.
+     * Updates a single `Module` using a unique key and a patch.
      */
-    updatePackageById: IUpdatePackagePayload | null;
+    updateModuleById: IUpdateModulePayload | null;
 
     /**
-     * Updates a single `Package` using a unique key and a patch.
+     * Updates a single `Module` using a unique key and a patch.
      */
-    updatePackageByNameAndOrganizationNameAndProjectName: IUpdatePackagePayload | null;
+    updateModuleByNameAndOrganizationNameAndProjectName: IUpdateModulePayload | null;
 
     /**
-     * Deletes a single `Package` using its globally unique id.
+     * Deletes a single `Module` using its globally unique id.
      */
-    deletePackage: IDeletePackagePayload | null;
+    deleteModule: IDeleteModulePayload | null;
 
     /**
-     * Deletes a single `Package` using a unique key.
+     * Deletes a single `Module` using a unique key.
      */
-    deletePackageById: IDeletePackagePayload | null;
+    deleteModuleById: IDeleteModulePayload | null;
 
     /**
-     * Deletes a single `Package` using a unique key.
+     * Deletes a single `Module` using a unique key.
      */
-    deletePackageByNameAndOrganizationNameAndProjectName: IDeletePackagePayload | null;
+    deleteModuleByNameAndOrganizationNameAndProjectName: IDeleteModulePayload | null;
 
     /**
-     * Upserts a single `Package`.
+     * Upserts a single `Module`.
      */
-    upsertPackage: IUpsertPackagePayload | null;
+    upsertModule: IUpsertModulePayload | null;
   }
 
-  interface ICreatePackageOnMutationArguments {
+  interface ICreateModuleOnMutationArguments {
     /**
      * The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
      */
-    input: ICreatePackageInput;
+    input: ICreateModuleInput;
   }
 
-  interface IUpdatePackageOnMutationArguments {
+  interface IUpdateModuleOnMutationArguments {
     /**
      * The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
      */
-    input: IUpdatePackageInput;
+    input: IUpdateModuleInput;
   }
 
-  interface IUpdatePackageByIdOnMutationArguments {
+  interface IUpdateModuleByIdOnMutationArguments {
     /**
      * The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
      */
-    input: IUpdatePackageByIdInput;
+    input: IUpdateModuleByIdInput;
   }
 
-  interface IUpdatePackageByNameAndOrganizationNameAndProjectNameOnMutationArguments {
+  interface IUpdateModuleByNameAndOrganizationNameAndProjectNameOnMutationArguments {
     /**
      * The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
      */
-    input: IUpdatePackageByNameAndOrganizationNameAndProjectNameInput;
+    input: IUpdateModuleByNameAndOrganizationNameAndProjectNameInput;
   }
 
-  interface IDeletePackageOnMutationArguments {
+  interface IDeleteModuleOnMutationArguments {
     /**
      * The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
      */
-    input: IDeletePackageInput;
+    input: IDeleteModuleInput;
   }
 
-  interface IDeletePackageByIdOnMutationArguments {
+  interface IDeleteModuleByIdOnMutationArguments {
     /**
      * The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
      */
-    input: IDeletePackageByIdInput;
+    input: IDeleteModuleByIdInput;
   }
 
-  interface IDeletePackageByNameAndOrganizationNameAndProjectNameOnMutationArguments {
+  interface IDeleteModuleByNameAndOrganizationNameAndProjectNameOnMutationArguments {
     /**
      * The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
      */
-    input: IDeletePackageByNameAndOrganizationNameAndProjectNameInput;
+    input: IDeleteModuleByNameAndOrganizationNameAndProjectNameInput;
   }
 
-  interface IUpsertPackageOnMutationArguments {
+  interface IUpsertModuleOnMutationArguments {
     /**
      * The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
      */
-    input: IUpsertPackageInput;
+    input: IUpsertModuleInput;
   }
 
   /**
-   * All input for the create `Package` mutation.
+   * All input for the create `Module` mutation.
    */
-  interface ICreatePackageInput {
+  interface ICreateModuleInput {
     /**
      * An arbitrary string value with no semantic meaning. Will be included in the payload verbatim. May be used to track mutations by the client.
      */
     clientMutationId?: string | null;
 
     /**
-     * The `Package` to be created by this mutation.
+     * The `Module` to be created by this mutation.
      */
-    package: IPackageInput;
+    module: IModuleInput;
   }
 
   /**
-   * An input for mutations affecting `Package`
+   * An input for mutations affecting `Module`
    */
-  interface IPackageInput {
+  interface IModuleInput {
     id?: number | null;
     name: string;
     organizationName: string;
@@ -806,10 +806,10 @@ declare namespace denolandiaQL {
   }
 
   /**
-   * The output of our create `Package` mutation.
+   * The output of our create `Module` mutation.
    */
-  interface ICreatePackagePayload {
-    __typename: 'CreatePackagePayload';
+  interface ICreateModulePayload {
+    __typename: 'CreateModulePayload';
 
     /**
      * The exact same `clientMutationId` that was provided in the mutation input, unchanged and unused. May be used by a client to track mutations.
@@ -817,9 +817,9 @@ declare namespace denolandiaQL {
     clientMutationId: string | null;
 
     /**
-     * The `Package` that was created by this mutation.
+     * The `Module` that was created by this mutation.
      */
-    package: IPackage | null;
+    module: IModule | null;
 
     /**
      * Our root query field type. Allows us to run any query from our mutation payload.
@@ -827,43 +827,43 @@ declare namespace denolandiaQL {
     query: IQuery | null;
 
     /**
-     * An edge for our `Package`. May be used by Relay 1.
+     * An edge for our `Module`. May be used by Relay 1.
      */
-    packageEdge: IPackagesEdge | null;
+    moduleEdge: IModulesEdge | null;
   }
 
-  interface IPackageEdgeOnCreatePackagePayloadArguments {
+  interface IModuleEdgeOnCreateModulePayloadArguments {
     /**
-     * The method to use when ordering `Package`.
+     * The method to use when ordering `Module`.
      * @default {"alias":"primary_key_asc","specs":[["name",true],["organization_name",true],["project_name",true]],"unique":true}
      */
-    orderBy?: Array<PackagesOrderBy> | null;
+    orderBy?: Array<ModulesOrderBy> | null;
   }
 
   /**
-   * All input for the `updatePackage` mutation.
+   * All input for the `updateModule` mutation.
    */
-  interface IUpdatePackageInput {
+  interface IUpdateModuleInput {
     /**
      * An arbitrary string value with no semantic meaning. Will be included in the payload verbatim. May be used to track mutations by the client.
      */
     clientMutationId?: string | null;
 
     /**
-     * The globally unique `ID` which will identify a single `Package` to be updated.
+     * The globally unique `ID` which will identify a single `Module` to be updated.
      */
     nodeId: string;
 
     /**
-     * An object where the defined keys will be set on the `Package` being updated.
+     * An object where the defined keys will be set on the `Module` being updated.
      */
-    packagePatch: IPackagePatch;
+    modulePatch: IModulePatch;
   }
 
   /**
-   * Represents an update to a `Package`. Fields that are set will be updated.
+   * Represents an update to a `Module`. Fields that are set will be updated.
    */
-  interface IPackagePatch {
+  interface IModulePatch {
     id?: number | null;
     name?: string | null;
     organizationName?: string | null;
@@ -879,10 +879,10 @@ declare namespace denolandiaQL {
   }
 
   /**
-   * The output of our update `Package` mutation.
+   * The output of our update `Module` mutation.
    */
-  interface IUpdatePackagePayload {
-    __typename: 'UpdatePackagePayload';
+  interface IUpdateModulePayload {
+    __typename: 'UpdateModulePayload';
 
     /**
      * The exact same `clientMutationId` that was provided in the mutation input, unchanged and unused. May be used by a client to track mutations.
@@ -890,9 +890,9 @@ declare namespace denolandiaQL {
     clientMutationId: string | null;
 
     /**
-     * The `Package` that was updated by this mutation.
+     * The `Module` that was updated by this mutation.
      */
-    package: IPackage | null;
+    module: IModule | null;
 
     /**
      * Our root query field type. Allows us to run any query from our mutation payload.
@@ -900,73 +900,73 @@ declare namespace denolandiaQL {
     query: IQuery | null;
 
     /**
-     * An edge for our `Package`. May be used by Relay 1.
+     * An edge for our `Module`. May be used by Relay 1.
      */
-    packageEdge: IPackagesEdge | null;
+    moduleEdge: IModulesEdge | null;
   }
 
-  interface IPackageEdgeOnUpdatePackagePayloadArguments {
+  interface IModuleEdgeOnUpdateModulePayloadArguments {
     /**
-     * The method to use when ordering `Package`.
+     * The method to use when ordering `Module`.
      * @default {"alias":"primary_key_asc","specs":[["name",true],["organization_name",true],["project_name",true]],"unique":true}
      */
-    orderBy?: Array<PackagesOrderBy> | null;
+    orderBy?: Array<ModulesOrderBy> | null;
   }
 
   /**
-   * All input for the `updatePackageById` mutation.
+   * All input for the `updateModuleById` mutation.
    */
-  interface IUpdatePackageByIdInput {
+  interface IUpdateModuleByIdInput {
     /**
      * An arbitrary string value with no semantic meaning. Will be included in the payload verbatim. May be used to track mutations by the client.
      */
     clientMutationId?: string | null;
 
     /**
-     * An object where the defined keys will be set on the `Package` being updated.
+     * An object where the defined keys will be set on the `Module` being updated.
      */
-    packagePatch: IPackagePatch;
+    modulePatch: IModulePatch;
     id: number;
   }
 
   /**
-   * All input for the `updatePackageByNameAndOrganizationNameAndProjectName` mutation.
+   * All input for the `updateModuleByNameAndOrganizationNameAndProjectName` mutation.
    */
-  interface IUpdatePackageByNameAndOrganizationNameAndProjectNameInput {
+  interface IUpdateModuleByNameAndOrganizationNameAndProjectNameInput {
     /**
      * An arbitrary string value with no semantic meaning. Will be included in the payload verbatim. May be used to track mutations by the client.
      */
     clientMutationId?: string | null;
 
     /**
-     * An object where the defined keys will be set on the `Package` being updated.
+     * An object where the defined keys will be set on the `Module` being updated.
      */
-    packagePatch: IPackagePatch;
+    modulePatch: IModulePatch;
     name: string;
     organizationName: string;
     projectName: string;
   }
 
   /**
-   * All input for the `deletePackage` mutation.
+   * All input for the `deleteModule` mutation.
    */
-  interface IDeletePackageInput {
+  interface IDeleteModuleInput {
     /**
      * An arbitrary string value with no semantic meaning. Will be included in the payload verbatim. May be used to track mutations by the client.
      */
     clientMutationId?: string | null;
 
     /**
-     * The globally unique `ID` which will identify a single `Package` to be deleted.
+     * The globally unique `ID` which will identify a single `Module` to be deleted.
      */
     nodeId: string;
   }
 
   /**
-   * The output of our delete `Package` mutation.
+   * The output of our delete `Module` mutation.
    */
-  interface IDeletePackagePayload {
-    __typename: 'DeletePackagePayload';
+  interface IDeleteModulePayload {
+    __typename: 'DeleteModulePayload';
 
     /**
      * The exact same `clientMutationId` that was provided in the mutation input, unchanged and unused. May be used by a client to track mutations.
@@ -974,10 +974,10 @@ declare namespace denolandiaQL {
     clientMutationId: string | null;
 
     /**
-     * The `Package` that was deleted by this mutation.
+     * The `Module` that was deleted by this mutation.
      */
-    package: IPackage | null;
-    deletedPackageId: string | null;
+    module: IModule | null;
+    deletedModuleId: string | null;
 
     /**
      * Our root query field type. Allows us to run any query from our mutation payload.
@@ -985,23 +985,23 @@ declare namespace denolandiaQL {
     query: IQuery | null;
 
     /**
-     * An edge for our `Package`. May be used by Relay 1.
+     * An edge for our `Module`. May be used by Relay 1.
      */
-    packageEdge: IPackagesEdge | null;
+    moduleEdge: IModulesEdge | null;
   }
 
-  interface IPackageEdgeOnDeletePackagePayloadArguments {
+  interface IModuleEdgeOnDeleteModulePayloadArguments {
     /**
-     * The method to use when ordering `Package`.
+     * The method to use when ordering `Module`.
      * @default {"alias":"primary_key_asc","specs":[["name",true],["organization_name",true],["project_name",true]],"unique":true}
      */
-    orderBy?: Array<PackagesOrderBy> | null;
+    orderBy?: Array<ModulesOrderBy> | null;
   }
 
   /**
-   * All input for the `deletePackageById` mutation.
+   * All input for the `deleteModuleById` mutation.
    */
-  interface IDeletePackageByIdInput {
+  interface IDeleteModuleByIdInput {
     /**
      * An arbitrary string value with no semantic meaning. Will be included in the payload verbatim. May be used to track mutations by the client.
      */
@@ -1010,9 +1010,9 @@ declare namespace denolandiaQL {
   }
 
   /**
-   * All input for the `deletePackageByNameAndOrganizationNameAndProjectName` mutation.
+   * All input for the `deleteModuleByNameAndOrganizationNameAndProjectName` mutation.
    */
-  interface IDeletePackageByNameAndOrganizationNameAndProjectNameInput {
+  interface IDeleteModuleByNameAndOrganizationNameAndProjectNameInput {
     /**
      * An arbitrary string value with no semantic meaning. Will be included in the payload verbatim. May be used to track mutations by the client.
      */
@@ -1023,25 +1023,25 @@ declare namespace denolandiaQL {
   }
 
   /**
-   * All input for the upsert `Package` mutation.
+   * All input for the upsert `Module` mutation.
    */
-  interface IUpsertPackageInput {
+  interface IUpsertModuleInput {
     /**
      * An arbitrary string value with no semantic meaning. Will be included in the payload verbatim. May be used to track mutations by the client.
      */
     clientMutationId?: string | null;
 
     /**
-     * The `Package` to be upserted by this mutation.
+     * The `Module` to be upserted by this mutation.
      */
-    package: IPackageInput;
+    module: IModuleInput;
   }
 
   /**
-   * The output of our upsert `Package` mutation.
+   * The output of our upsert `Module` mutation.
    */
-  interface IUpsertPackagePayload {
-    __typename: 'UpsertPackagePayload';
+  interface IUpsertModulePayload {
+    __typename: 'UpsertModulePayload';
 
     /**
      * The exact same `clientMutationId` that was provided in the mutation input, unchanged and unused. May be used by a client to track mutations.
@@ -1049,9 +1049,9 @@ declare namespace denolandiaQL {
     clientMutationId: string | null;
 
     /**
-     * The `Package` that was upserted by this mutation.
+     * The `Module` that was upserted by this mutation.
      */
-    package: IPackage | null;
+    module: IModule | null;
 
     /**
      * Our root query field type. Allows us to run any query from our mutation payload.
@@ -1059,17 +1059,17 @@ declare namespace denolandiaQL {
     query: IQuery | null;
 
     /**
-     * An edge for our `Package`. May be used by Relay 1.
+     * An edge for our `Module`. May be used by Relay 1.
      */
-    packageEdge: IPackagesEdge | null;
+    moduleEdge: IModulesEdge | null;
   }
 
-  interface IPackageEdgeOnUpsertPackagePayloadArguments {
+  interface IModuleEdgeOnUpsertModulePayloadArguments {
     /**
-     * The method to use when ordering `Package`.
+     * The method to use when ordering `Module`.
      * @default {"alias":"primary_key_asc","specs":[["name",true],["organization_name",true],["project_name",true]],"unique":true}
      */
-    orderBy?: Array<PackagesOrderBy> | null;
+    orderBy?: Array<ModulesOrderBy> | null;
   }
 }
 

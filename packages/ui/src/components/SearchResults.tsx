@@ -1,15 +1,17 @@
 import './SearchResults.css'
 import 'react-table/react-table.css'
+const debounce = require('lodash/debounce')
 import { Card, Icon, Label, Portal, PortalProps } from 'semantic-ui-react'
-import * as React from 'react'
-import Table from 'react-table'
-import { Store } from 'interfaces'
 import { requestData } from 'src/util/table'
 import * as common from 'common'
+import * as React from 'react'
 import cx from 'classnames'
-const debounce = require('lodash/debounce')
+import Table, { FinalState } from 'react-table'
+import { memoize } from 'lodash'
 
-export interface Props extends React.HTMLAttributes<HTMLDivElement> {}
+export interface Props extends React.HTMLAttributes<HTMLDivElement> {
+  moduleQueryString: string
+}
 export type SearchResultsState = {
   data: any[]
   error: string | null
@@ -19,9 +21,11 @@ export type SearchResultsState = {
 }
 // https://raw.githubusercontent.com/denoland/registry/master/src/database.json
 
+const getFiltered = memoize(queryString => [{ id: 'name', value: queryString }])
 export class SearchResults extends React.PureComponent<Props, SearchResultsState> {
   public offsiteHeaders: React.RefObject<HTMLDivElement>
-  constructor (props: Store.All) {
+
+  constructor (props: Props) {
     super(props as any)
     this.offsiteHeaders = React.createRef()
     this.state = {
@@ -41,7 +45,7 @@ export class SearchResults extends React.PureComponent<Props, SearchResultsState
         page: state.page,
         sorted: state.sorted,
         filtered: state.filtered,
-        columnTypeMappingByColumnName: common.columns.packages.columnsByName
+        columnTypeMappingByColumnName: common.columns.modules.columnsByName
       })
       this.setState({
         data: rows,
@@ -59,8 +63,9 @@ export class SearchResults extends React.PureComponent<Props, SearchResultsState
   }, 500)
 
   render () {
-    const { className, ...rest } = this.props
-    const { data, loading, pages } = this.state
+    const { className, moduleQueryString, ...rest } = this.props
+    const { state: { data, loading, pages } } = this
+    let tableState: FinalState<denolandiaQL.IModule>
     return (
       <Table
         defaultSorted={[
@@ -77,14 +82,16 @@ export class SearchResults extends React.PureComponent<Props, SearchResultsState
               if (this.offsiteHeaders.current) {
                 mountProps.mountNode = this.offsiteHeaders.current
               }
+              const nameSorter = tableState.sorted && tableState.sorted.find(sorter => sorter.id === 'name')
+              const sortIcon = !nameSorter ? 'sort' : nameSorter.desc ? 'sort down' : 'sort up'
               return (
-                <Portal open trigger={<span>Package trigger</span>} {...mountProps}>
-                  <Label icon='sort' content={'Package'} style={{ float: 'right' }} />
+                <Portal open trigger={<span>Module trigger</span>} {...mountProps}>
+                  <Label icon={sortIcon} content={'Modules'} style={{ float: 'right', cursor: 'pointer' }} />
                 </Portal>
               )
             },
             Cell: ({ original }) => {
-              const field: denolandiaQL.IPackage = original || {}
+              const field: denolandiaQL.IModule = original || {}
               return (
                 <Card key={field.name} fluid style={{ padding: '0 20px' }}>
                   <Card.Content>
@@ -108,6 +115,7 @@ export class SearchResults extends React.PureComponent<Props, SearchResultsState
                         size='small'
                         horizontal
                         as='a'
+                        target='_blank'
                         href={field.repositoryUrl + '/stargazers'}
                       >
                         <Icon aria-label='stars' name='star' />
@@ -119,6 +127,7 @@ export class SearchResults extends React.PureComponent<Props, SearchResultsState
                         size='small'
                         horizontal
                         as='a'
+                        target='_blank'
                         href={field.repositoryUrl + '/issues'}
                       >
                         <Icon aria-label='open issues' name='bug' />
@@ -156,8 +165,10 @@ export class SearchResults extends React.PureComponent<Props, SearchResultsState
         multiSort
         onFetchData={this.fetchData}
         pages={pages!}
+        filtered={getFiltered(moduleQueryString)}
       >
         {(state, makeTable, instance) => {
+          tableState = state
           return (
             <div className={cx(className, 'search_results_table')} {...rest}>
               <div ref={this.offsiteHeaders} style={{ padding: 2 }} />
