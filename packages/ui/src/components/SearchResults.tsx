@@ -98,12 +98,7 @@ export class SearchResults extends React.PureComponent<Props, SearchResultsState
                       style={{ display: 'inline-block', marginLeft: '10px' }}
                     />
                     <span style={{ float: 'right' }}>
-                      <Label
-                        basic
-                        color={field.licenseSpdxId === 'MIT' ? null : 'blue'}
-                        size='small'
-                        horizontal
-                      >
+                      <Label basic color='blue' size='small' horizontal>
                         <Icon aria-label='license' name='balance' />
                         {field.licenseSpdxId}
                       </Label>
@@ -113,20 +108,20 @@ export class SearchResults extends React.PureComponent<Props, SearchResultsState
                         size='small'
                         horizontal
                         as='a'
-                        href={field.repositoryURL + '/stargazers'}
+                        href={field.repositoryUrl + '/stargazers'}
                       >
                         <Icon aria-label='stars' name='star' />
                         {field.stargazerCount}
                       </Label>
                       <Label
                         basic
-                        color={field.issueCount === 0 ? null : 'orange'}
+                        color={field.issueCount === 0 ? 'grey' : 'orange'}
                         size='small'
                         horizontal
                         as='a'
-                        href={field.repositoryURL + '/issues'}
+                        href={field.repositoryUrl + '/issues'}
                       >
-                        <Icon aria-label='open issues' name='bug'>
+                        <Icon aria-label='open issues' name='bug' />
                         {field.issueCount}
                       </Label>
                     </span>

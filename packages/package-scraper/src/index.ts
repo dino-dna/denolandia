@@ -46,7 +46,7 @@ export async function scrapeDatabase (opts?: ScrapeDatabaseOptions) {
         denolandiaEndpont: finalDenolandiaGraphqlApiEndpoint,
         denolandiaAdminToken: finalDenolandiaAdminToken,
         name,
-        url: toScrape[name],
+        url: toScrape[name].url,
         githubToken: finalGithubToken,
         githubEndpoint: finalGithubGraphqlApiEndpont
       })
@@ -67,7 +67,7 @@ export interface ScrapeOptions {
 }
 
 export async function scrape (opts: ScrapeOptions) {
-  const { name, url, githubToken, githubEndpoint, denolandiaEndpont, denolandiaAdminToken } = opts
+  const { name, url = '', githubToken, githubEndpoint, denolandiaEndpont, denolandiaAdminToken } = opts
   if (!url.match(/github/)) {
     console.warn(`unable to scrape ${url}. can only scrape github projects`)
     return
@@ -75,13 +75,17 @@ export async function scrape (opts: ScrapeOptions) {
   const [org, project] = url.split('.com/')[1].split('/')
   console.log(`attemping upsert on: ${name}@${org}/${project}`)
   const body = nanogql(QUERY(org, project))()
-  const meta = await (await fetch(githubEndpoint, {
+  const res = await fetch(githubEndpoint, {
     method: 'post',
     body,
     headers: {
       Authorization: `bearer ${githubToken}`
     }
-  })).json()
+  })
+  if (res.status >= 300) {
+    throw new Error(`failed get fetch project data [http: ${res.status}]. github status text: ${res.statusText}`)
+  }
+  const meta = await res.json()
   const {
     repository: {
       descriptionHTML,
