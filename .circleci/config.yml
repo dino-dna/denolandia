@@ -54,4 +54,5 @@ jobs:
       - run: docker network prune --force
 
       # build
+      - run: yarn bootstrap
       - run: yarn build:the_whole_enchilada
