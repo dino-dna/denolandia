@@ -21,6 +21,7 @@
     "noUnusedLocals": true
   },
   "exclude": [
-    "./common"
+    "./common",
+    "./build"
   ]
 }

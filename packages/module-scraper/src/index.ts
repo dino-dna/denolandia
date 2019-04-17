@@ -98,7 +98,7 @@ export async function scrape (opts: ScrapeOptions) {
       releases: { edges: releaseEdges }
     }
   } = meta.data
-  const { spdxId: licenseSpdxId = '' } = licenseInfo
+  const { spdxId: licenseSpdxId = '' } = licenseInfo || {}
   const upsertBody = common.gql.queries.modules.upsertModuleBody({
     descriptionHtml: descriptionHTML,
     homepageUrl,
