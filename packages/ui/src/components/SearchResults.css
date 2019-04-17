@@ -19,3 +19,20 @@
   -webkit-box-shadow: 0 0px 1px 0px rgba(0,0,0,0.15) !important;
   box-shadow: 0 0px 1px 0px rgba(0,0,0,0.15) !important;
 } */
+
+
+.search_result-tags {
+  position: absolute;
+  right: 0.5em;
+  top: 0.5em;
+}
+
+.search-results-homepage {
+  bottom: -1px;
+  display: inline-block;
+  position: relative;
+}
+
+.search-results-homepage.--missing {
+  font-style: italic;
+}

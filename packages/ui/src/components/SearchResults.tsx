@@ -94,7 +94,7 @@ export class SearchResults extends React.PureComponent<Props, SearchResultsState
               const field: denolandiaQL.IModule = original || {}
               return (
                 <Card key={field.name} fluid style={{ padding: '0 20px' }}>
-                  <Card.Content>
+                  <Card.Content style={{ overflowX: 'hidden', padding: '1em 0' }}>
                     <Card.Header content={field.name} style={{ display: 'inline-block' }} />
                     <Card.Meta
                       as='a'
@@ -104,8 +104,8 @@ export class SearchResults extends React.PureComponent<Props, SearchResultsState
                       content={field.repositoryUrl}
                       style={{ display: 'inline-block', marginLeft: '10px' }}
                     />
-                    <span style={{ float: 'right' }}>
-                      <Label basic color='blue' size='small' horizontal>
+                    <span className='search_result-tags'>
+                      <Label basic color='blue' size='small'>
                         <Icon aria-label='license' name='balance' />
                         {field.licenseSpdxId}
                       </Label>
@@ -113,7 +113,6 @@ export class SearchResults extends React.PureComponent<Props, SearchResultsState
                         basic
                         color='yellow'
                         size='small'
-                        horizontal
                         as='a'
                         target='_blank'
                         href={field.repositoryUrl + '/stargazers'}
@@ -125,7 +124,6 @@ export class SearchResults extends React.PureComponent<Props, SearchResultsState
                         basic
                         color={field.issueCount === 0 ? 'grey' : 'orange'}
                         size='small'
-                        horizontal
                         as='a'
                         target='_blank'
                         href={field.repositoryUrl + '/issues'}
@@ -139,18 +137,25 @@ export class SearchResults extends React.PureComponent<Props, SearchResultsState
                         <div dangerouslySetInnerHTML={{ __html: field.descriptionHtml }} />
                       </Card.Description>
                     )}
-                    {field.homepageUrl && (
-                      <React.Fragment>
-                        <Icon name='home' size='small' />
+                    <React.Fragment>
+                      <Icon name='home' size='small' />
+                      {field.homepageUrl ? (
                         <Card.Meta
+                          className='search-results-homepage'
                           as='a'
                           href={field.homepageUrl}
                           target='_blank'
                           rel='noreferrer noopener'
                           content={field.homepageUrl}
                         />
-                      </React.Fragment>
-                    )}
+                      ) : (
+                        <Card.Meta
+                          className='search-results-homepage --missing'
+                          as='span'
+                          content={<small>No homepage URL</small>}
+                        />
+                      )}
+                    </React.Fragment>
                   </Card.Content>
                 </Card>
               )
