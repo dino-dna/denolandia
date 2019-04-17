@@ -68,8 +68,8 @@ export interface ScrapeOptions {
 
 export async function scrape (opts: ScrapeOptions) {
   const { name, url = '', githubToken, githubEndpoint, denolandiaEndpont, denolandiaAdminToken } = opts
-  if (!url.match(/github/)) {
-    console.warn(`unable to scrape ${url}. can only scrape github projects`)
+  if (!url.match || !url.match(/github/)) {
+    console.warn(`unable to scrape ${JSON.stringify(url)}. can only scrape github projects`)
     return
   }
   const [org, project] = url.split('.com/')[1].split('/')
@@ -92,13 +92,13 @@ export async function scrape (opts: ScrapeOptions) {
       homepageUrl,
       repositoryTopics: { edges: topicEdges },
       issues: { totalCount: issueCount },
-      licenseInfo,
+      licenseInfo = {},
       stargazers: { totalCount: stargazerCount },
       url: repositoryUrl,
       releases: { edges: releaseEdges }
     }
   } = meta.data
-  const { spdxId: licenseSpdxId = '' } = licenseInfo || {}
+  const { spdxId: licenseSpdxId = '' } = licenseInfo
   const upsertBody = common.gql.queries.modules.upsertModuleBody({
     descriptionHtml: descriptionHTML,
     homepageUrl,
